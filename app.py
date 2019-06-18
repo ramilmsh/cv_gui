@@ -1,4 +1,8 @@
 from src.gui.VideoStreamer import VideoStreamer
+from src.camera.Camera import Camera
+from threading import Thread
 
-server = VideoStreamer(None)
-server.run(host="0.0.0.0", threaded=True)
+print("fsfs")
+server = VideoStreamer(Camera(0))
+
+#thread = Thread(target=server.run, kwargs={"host": "0.0.0.0", "threaded": True})

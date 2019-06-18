@@ -1,17 +1,18 @@
 from flask import Flask, render_template, Response
 import os
 
-from src.camera.AbstractCamera import AbstractCamera
+from src.camera.BaseCamera import BaseCamera
 
 class VideoStreamer(Flask):
     DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
 
-    def __init__(self, camera: AbstractCamera):
+    def __init__(self, camera: BaseCamera):
         super().__init__("GUI", template_folder=VideoStreamer.DIRECTORY+"/templates",
                                 static_folder=VideoStreamer.DIRECTORY+"/static")
     
         self.camera = camera
+        print(camera)
 
         self.add_url_rule('/', view_func=self.index)
         self.add_url_rule('/stream', view_func=self.stream)
