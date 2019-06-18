@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="static/style.css" />
-    </head>
 
-    <body>
-        <h1>{{ context.title }}</h1>
-        dfs
-    </body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="static/jquery.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="static/jsmpeg.min.js"></script>
+    <script src="static/main.js"></script>
+</head>
+
+<body>
+    <img src="{{ url_for('stream') }}">
+</body>
+
 </html>
