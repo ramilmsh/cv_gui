@@ -17,10 +17,10 @@ class VideoStreamer(Flask):
         self.add_url_rule('/stream', view_func=self.stream)
 
     def index(self):
-        return render_template('index.html')
+        return render_template('index.html', context={"title":"Title"})
 
     def stream(self):
-    #   return Response(self._generate_message(), mimetype='multipart/x-mixed-replace; boundary=frame')
+        return Response(self._generate_message(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
     def _generate_message(self):
         while True:
