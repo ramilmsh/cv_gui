@@ -15,11 +15,11 @@ class VideoStreamer(Flask):
     IMAGE_HEIGHT = 360
 
 
-    def __init__(self, camera: BaseCamera):
+    def __init__(self, camera: BaseCamera, pubsub):
         super().__init__("GUI", template_folder=VideoStreamer.DIRECTORY+"/templates",
                          static_folder=VideoStreamer.DIRECTORY+"/static")
 
-        self.redis = Redis()
+        self.pubsub = pubsub
 
         self.add_url_rule('/', view_func=self.index)
         self.add_url_rule('/stream', view_func=self.stream)
@@ -31,8 +31,7 @@ class VideoStreamer(Flask):
         return Response(self._generate_message(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
     def _generate_message(self):
-        redis_pubsub = self.redis.pubsub()
-        redis_pubsub.subscribe("DefaultCamera")
+        self.pubsub.subscribe("DefaultCamera")
 
         for message in redis_pubsub.listen():
             if message['type'] != 'message':

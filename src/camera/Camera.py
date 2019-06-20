@@ -10,10 +10,10 @@ from src.camera.Frame import Frame
 class Camera(BaseCamera):
 
 
-    def __init__(self, source, name: str = 'DefaultCamera'):
+    def __init__(self, source, pubsub, name: str = 'DefaultCamera'):
         super().__init__(name=name)
         self.capture = cv2.VideoCapture(source)
-        self.redis = Redis()
+        self.pubsub = pubsub
 
         self.thread = Thread(target=self._post_data, daemon=True)
         self.thread.start()
@@ -29,5 +29,5 @@ class Camera(BaseCamera):
 
     def _post_data(self):
         while True:
-            self.redis.publish(self.name, self.read())
+            self.pubsub.publish(self.name, self.read())
             time.sleep(.02)

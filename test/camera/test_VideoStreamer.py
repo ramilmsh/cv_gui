@@ -6,7 +6,7 @@ class VideoStreamerTest(BaseTest):
 
     def setUp(self):
         self.server = VideoStreamer(None)
-        self.server.run(host="0.0.0.0", threaded=True)
+        #self.server.run(host="0.0.0.0", threaded=True)
 
     def test_init(self):
         self.assertIsInstance(self.server, VideoStreamer, "Server should be a videostream server")
