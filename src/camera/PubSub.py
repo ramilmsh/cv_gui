@@ -16,14 +16,14 @@ class PubSub:
     MAX_ATTEMPTS = 20
     SLEEP_BETWEEN_ATTEMPTS = 20
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         """
         Initialize redis instance
 
         :param dict args: positional arguments (passed on to redis instance)
         :param dict kwargs: key-word arguments (passed on to redis instance)
         """
-        self.redis = StrictRedis(args, kwargs)
+        self.redis = StrictRedis()
         self.subscribers = {}
         self.threads = {}
 
@@ -34,7 +34,6 @@ class PubSub:
         :param str channel: channel name
         :param object message: data to be published
         """
-        print(message)
         self.redis.publish(channel, message)
 
     def subscribe(self, channel: str, callback: callable) -> str:
@@ -49,21 +48,22 @@ class PubSub:
         """
         if channel not in self.subscribers:
             self.subscribers[channel] = OrderedHashSet()
-            print(channel)
-            if channel not in self.threads:
-                self.threads[channel] = Thread(target=self._subscribe_loop, args=(channel), daemon=True)
+
+        _id = self.subscribers[channel].append(callback)
+
+        if channel not in self.threads:
+            self.threads[channel] = Thread(target=self._subscribe_loop, args=(channel, ), daemon=True)
             
-            _attempt_count = 0
-            while self.threads[channel].is_alive():
-                print(_attempt_count)
-                if _attempt_count >= PubSub.MAX_ATTEMPTS:
-                    raise RuntimeError("Subscriber thread is not dying")
-                _attempt_count += 1
-                time.sleep(PubSub.SLEEP_BETWEEN_ATTEMPTS)
-            
+        #    _attempt_count = 0
+        #    while self.threads[channel].is_alive():
+        #        if _attempt_count >= PubSub.MAX_ATTEMPTS:
+        #            raise RuntimeError("Subscriber thread is not dying")
+        #        _attempt_count += 1
+        #        time.sleep(PubSub.SLEEP_BETWEEN_ATTEMPTS)
+        if not self.threads[channel].is_alive():
             self.threads[channel].start()
 
-        return self.subscribers[channel].append(callback)
+        return _id
 
     def unsubscribe(self, channel: str, id: str):
         if self.subscribers[channel] is None:
@@ -71,11 +71,9 @@ class PubSub:
 
         del self.subscribers[channel][id]
         if len(self.subscribers[channel]) == 0:
-            self.redis.publish(channel, None)
+            self.redis.publish(channel, 'done')
 
-    def _subscribe_loop(self, channel):
-        assert type(channel) == str
-
+    def _subscribe_loop(self, channel: str):
         redis_pubsub = self.redis.pubsub()
         redis_pubsub.subscribe(channel)
 
@@ -85,7 +83,7 @@ class PubSub:
             
             if len(self.subscribers[channel]) == 0:
                 break
-            
+
             for callback in self.subscribers[channel].values():
                 self._on_receive(channel, message, callback)
 
