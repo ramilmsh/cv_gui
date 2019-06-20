@@ -14,6 +14,7 @@ class VideoStreamer(Flask):
     DIRECTORY = os.path.dirname(os.path.realpath(__file__))
     IMAGE_HEIGHT = 360
 
+
     def __init__(self, camera: BaseCamera):
         super().__init__("GUI", template_folder=VideoStreamer.DIRECTORY+"/templates",
                          static_folder=VideoStreamer.DIRECTORY+"/static")
@@ -43,5 +44,3 @@ class VideoStreamer(Flask):
                     b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpeg', frame.to_cv2_bgr())[1].tobytes() + b'\r\n')
             except Exception as e:
                 pass
-        
-        print("WTF")
