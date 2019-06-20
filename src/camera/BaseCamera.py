@@ -2,6 +2,7 @@ import numpy as np
 
 class BaseCamera:
 
+    
     def __init__(self, name: str = 'GenericCamera'):
         self.name = name
 

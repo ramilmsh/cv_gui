@@ -1,22 +1,32 @@
 import cv2
 import datetime
+from redis import StrictRedis
+from threading import Thread
+import time
 
 from src.camera.BaseCamera import BaseCamera
-
+from src.camera.Frame import Frame
 
 class Camera(BaseCamera):
+    
 
-
-    def __init__(self, source, name:str='DefaultCamera'):
+    def __init__(self, source, name: str = 'DefaultCamera'):
         super().__init__(name=name)
         self.capture = cv2.VideoCapture(source)
-    
+        self.redis = StrictRedis()
+
+        self.thread = Thread(target=self._post_data)
+        self.thread.start()
+
     def read(self):
         ret, frame = self.capture.read()
-        print(ret)
-        return frame
+        frame = Frame.from_cv2_bgr(frame)
+        return frame.to_bytes()
 
     def check(self):
         ret, = self.capture.read()
         return ret
-    
+
+    def _post_data(self):
+        while True:
+            self.redis.set(self.name, self.read())
