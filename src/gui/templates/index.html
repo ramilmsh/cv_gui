@@ -24,15 +24,12 @@
         <div class="col s12 m7">
             <div class="card">
                 <div class="card-image">
-                    <img id="stream" src="/stream">
-                    <span class="card-title"></span>
+                    <img src="{{ url_for('stream') }}">
+                    <span class="card-title">Channel {{ url_for('stream') }}</span>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-    </script>
 </body>
 
 </html>
