@@ -1,9 +1,10 @@
 import time
 from redis import StrictRedis
 from queue import PriorityQueue
-from threading import Thread
+from threading import Thread, Lock
 
 from src.utils.OrderedHashSet import OrderedHashSet
+
 
 class PubSub:
     """
@@ -13,8 +14,7 @@ class PubSub:
     provide guarantee of sequential execution, but rather allows several subprocesses
     to process same data. Processes must NOT alter data as it is sent by reference
     """
-    MAX_ATTEMPTS = 20
-    SLEEP_BETWEEN_ATTEMPTS = 20
+    SINGLETON = None
 
     def __init__(self):
         """
@@ -25,7 +25,9 @@ class PubSub:
         """
         self.redis = StrictRedis()
         self.subscribers = {}
+        self.subscribers_lock = Lock()
         self.threads = {}
+        PubSub.SINGLETON = self
 
     def publish(self, channel: str, message: object):
         """
@@ -51,16 +53,9 @@ class PubSub:
 
         _id = self.subscribers[channel].append(callback)
 
-        if channel not in self.threads:
-            self.threads[channel] = Thread(target=self._subscribe_loop, args=(channel, ), daemon=True)
-            
-        #    _attempt_count = 0
-        #    while self.threads[channel].is_alive():
-        #        if _attempt_count >= PubSub.MAX_ATTEMPTS:
-        #            raise RuntimeError("Subscriber thread is not dying")
-        #        _attempt_count += 1
-        #        time.sleep(PubSub.SLEEP_BETWEEN_ATTEMPTS)
-        if not self.threads[channel].is_alive():
+        if channel not in self.threads or not self.threads[channel].is_alive():
+            self.threads[channel] = Thread(
+                target=self._subscribe_loop, args=(channel, ), daemon=True)
             self.threads[channel].start()
 
         return _id
@@ -69,9 +64,16 @@ class PubSub:
         if self.subscribers[channel] is None:
             return
 
-        del self.subscribers[channel][id]
+        with self.subscribers_lock:
+            del self.subscribers[channel][id]
         if len(self.subscribers[channel]) == 0:
             self.redis.publish(channel, 'done')
+
+    @classmethod
+    def get_instance(cls):
+        if PubSub.SINGLETON is None:
+            PubSub.SINGLETON = PubSub()
+        return PubSub.SINGLETON
 
     def _subscribe_loop(self, channel: str):
         redis_pubsub = self.redis.pubsub()
@@ -80,13 +82,13 @@ class PubSub:
         for message in redis_pubsub.listen():
             if message['type'] != 'message':
                 continue
-            
+
             if len(self.subscribers[channel]) == 0:
                 break
 
-            for callback in self.subscribers[channel].values():
-                self._on_receive(channel, message, callback)
-
+            with self.subscribers_lock:
+                for callback in self.subscribers[channel].values():
+                    self._on_receive(channel, message, callback)
 
     def _on_receive(self, channel: str, message: object, callback: callable):
         callback(message['data'])

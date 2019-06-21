@@ -6,11 +6,13 @@ import time
 
 from src.camera.BaseCamera import BaseCamera
 from src.camera.Frame import Frame
+from src.utils.injection.decorator import inject
+from src.utils.PubSub import PubSub
 
 class Camera(BaseCamera):
 
-
-    def __init__(self, source, pubsub, name: str = 'DefaultCamera'):
+    @inject
+    def __init__(self, source, name: str = 'DefaultCamera', pubsub: PubSub = None):
         super().__init__(name=name)
         self.capture = cv2.VideoCapture(source)
         self.pubsub = pubsub
@@ -30,4 +32,3 @@ class Camera(BaseCamera):
     def _post_data(self):
         while True:
             self.pubsub.publish(self.name, self.read())
-            time.sleep(.02)
