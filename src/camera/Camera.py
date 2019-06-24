@@ -22,8 +22,7 @@ class Camera(BaseCamera):
 
     def read(self):
         ret, frame = self.capture.read()
-        frame = Frame.from_cv2_bgr(frame)
-        return frame.to_bytes()
+        return Frame.from_cv2_bgr(frame).to_bytes()
 
     def check(self):
         ret, = self.capture.read()

@@ -2,6 +2,8 @@ from src.gui.VideoStreamer import VideoStreamer
 from src.camera.Camera import Camera
 from threading import Thread
 import time
+import inspect
+from redis import StrictRedis
 
 from src.utils.injection.decorator import inject
 from src.utils.PubSub import PubSub

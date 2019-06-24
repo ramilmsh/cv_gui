@@ -3,6 +3,7 @@ from redis import StrictRedis
 from queue import PriorityQueue
 from threading import Thread, Lock
 
+from src.utils.injection.decorator import inject
 from src.utils.OrderedHashSet import OrderedHashSet
 
 
@@ -14,20 +15,20 @@ class PubSub:
     provide guarantee of sequential execution, but rather allows several subprocesses
     to process same data. Processes must NOT alter data as it is sent by reference
     """
-    SINGLETON = None
 
-    def __init__(self):
+    @inject
+    def __init__(self, redis: StrictRedis = None):
         """
         Initialize redis instance
 
         :param dict args: positional arguments (passed on to redis instance)
         :param dict kwargs: key-word arguments (passed on to redis instance)
         """
-        self.redis = StrictRedis()
+        assert redis is not None, "Redis must be initialized"
+        self.redis = redis
         self.subscribers = {}
         self.subscribers_lock = Lock()
         self.threads = {}
-        PubSub.SINGLETON = self
 
     def publish(self, channel: str, message: object):
         """
@@ -57,7 +58,7 @@ class PubSub:
             self.threads[channel] = Thread(
                 target=self._subscribe_loop, args=(channel, ), daemon=True)
             self.threads[channel].start()
-
+        print(len(self.subscribers))
         return _id
 
     def unsubscribe(self, channel: str, id: str):
@@ -68,12 +69,6 @@ class PubSub:
             del self.subscribers[channel][id]
         if len(self.subscribers[channel]) == 0:
             self.redis.publish(channel, 'done')
-
-    @classmethod
-    def get_instance(cls):
-        if PubSub.SINGLETON is None:
-            PubSub.SINGLETON = PubSub()
-        return PubSub.SINGLETON
 
     def _subscribe_loop(self, channel: str):
         redis_pubsub = self.redis.pubsub()
