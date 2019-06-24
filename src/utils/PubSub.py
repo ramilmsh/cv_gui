@@ -1,6 +1,4 @@
-import time
 from redis import StrictRedis
-from queue import PriorityQueue
 from threading import Thread, Lock
 
 from src.utils.injection.decorator import inject
@@ -58,7 +56,6 @@ class PubSub:
             self.threads[channel] = Thread(
                 target=self._subscribe_loop, args=(channel, ), daemon=True)
             self.threads[channel].start()
-        print(len(self.subscribers))
         return _id
 
     def unsubscribe(self, channel: str, id: str):

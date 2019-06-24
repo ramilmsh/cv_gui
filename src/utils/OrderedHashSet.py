@@ -1,6 +1,3 @@
-import sys
-
-
 class OrderedHashSet(dict):
     
     def __init__(self):

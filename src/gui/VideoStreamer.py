@@ -1,18 +1,12 @@
 from flask import Flask, render_template, Response
-from redis import Redis
 from threading import Lock
 
 import cv2
-import numpy as np
 import os
-import time
-
-from enum import Enum
 
 from src.utils.injection.decorator import inject
 from src.utils.PubSub import PubSub
 
-from src.camera.BaseCamera import BaseCamera
 from src.camera.Frame import Frame
 
 
