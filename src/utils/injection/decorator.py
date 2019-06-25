@@ -18,7 +18,7 @@ class Bindings:
     
     @classmethod
     def binding_available(cls, annotation):
-        if type(annotation) == list or type(annotation) == dict:
+        if not hasattr(annotation, '__name__'):
             return False
         return annotation.__name__ in cls._bindings
 

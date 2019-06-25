@@ -1,5 +1,6 @@
 from typing import Dict
 
+import numpy as np
 from redis import StrictRedis
 from threading import Thread, Lock
 
@@ -38,12 +39,13 @@ class PubSub:
         """
         self.redis.publish(channel, message)
 
-    def subscribe(self, channel: str, callback: callable) -> int:
+    def subscribe(self, channel: str, callback: callable, daemon: bool = True) -> int:
         """
         Subscribe to a channel
 
         :param str channel: channel name
         :param callable callback: a callback to be executed on receiving a message
+        :param bool daemon: run subscriber in daemon mode
 
         :return: returns callback id in the queue
         :int:
@@ -56,7 +58,7 @@ class PubSub:
 
         if channel not in self.threads or not self.threads[channel].is_alive():
             self.threads[channel] = Thread(
-                target=self._subscribe_loop, args=(channel, ), daemon=True)
+                target=self._subscribe_loop, args=(channel,), daemon=daemon)
             self.threads[channel].start()
         return _id
 
