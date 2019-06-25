@@ -59,7 +59,7 @@ class PubSub:
         return _id
 
     def unsubscribe(self, channel: str, id: str):
-        if self.subscribers[channel] is None:
+        if channel not in self.subscribers or id not in self.subscribers[channel]:
             return
 
         with self.subscribers_lock:
@@ -82,5 +82,5 @@ class PubSub:
                 for callback in self.subscribers[channel].values():
                     self._on_receive(channel, message, callback)
 
-    def _on_receive(self, channel: str, message: object, callback: callable):
+    def _on_receive(self, channel: str, message: dict, callback: callable):
         callback(message['data'])

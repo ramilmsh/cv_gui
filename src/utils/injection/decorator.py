@@ -4,7 +4,7 @@ import inspect
 
 
 class Bindings:
-    _bindings = ['Redis', 'PubSub']
+    _bindings = ['Redis', 'PubSub', 'Config']
     _singletons = {}
 
     @classmethod

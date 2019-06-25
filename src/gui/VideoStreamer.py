@@ -26,12 +26,13 @@ class VideoStreamer(Flask):
 
         self.add_url_rule('/', view_func=self.index)
         self.add_url_rule('/stream', view_func=self.stream)
+        self.add_url_rule('/stream/<channel>', view_func=self.stream)
 
     def index(self):
         return render_template('index.html', context={"title": "Title"})
 
-    def stream(self):
-        _id = self.pubsub.subscribe("DefaultCamera", self._receive_data)
+    def stream(self, channel: str = 'DefaultCamera'):
+        _id = self.pubsub.subscribe(channel, self._receive_data)
         response = Response(self._generate_message(), mimetype='multipart/x-mixed-replace; boundary=frame')
         response.call_on_close(lambda: self.pubsub.unsubscribe("DefaultCamera", _id))
         return response
