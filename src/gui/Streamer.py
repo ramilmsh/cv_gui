@@ -1,3 +1,4 @@
+from multiprocessing import Process
 from threading import Lock
 
 import cv2
@@ -15,7 +16,7 @@ class Streamer:
         self.channel = channel
         self.pubsub = pubsub
 
-        self._pubsub_id = -1  # type: int
+        self._subscriber = None  # type: Process
         self.frame_data = b''  # type: bytes
         self.frame_lock = Lock()
         self.running = 0  # type: int
@@ -24,12 +25,12 @@ class Streamer:
         self.running += 1
         if self.running > 1:
             return
-        self._pubsub_id = self.pubsub.subscribe(self.channel, self._receive_frame)
+        self._subscriber = self.pubsub.subscribe(self.channel, self._receive_frame)
 
     def stop(self):
         self.running -= 1
         if self.running == 0:
-            self.pubsub.unsubscribe(self.channel, self._pubsub_id)
+            self.pubsub.unsubscribe(self._subscriber)
 
     def generator(self):
         self.run()

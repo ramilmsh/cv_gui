@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9a037647-b25e-4577-bb2b-e089d4416219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera/Camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera/Camera.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera/Frame.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera/Frame.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/Processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/Processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Streamer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Streamer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/PubSub.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/PubSub.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,10 +40,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/utils/PubSub.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="89" column="40" selection-start-line="89" selection-start-column="40" selection-end-line="89" selection-end-column="40" />
+            <state relative-caret-position="278">
+              <caret line="50" column="90" selection-start-line="50" selection-start-column="90" selection-end-line="50" selection-end-column="90" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Streamer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,7 +155,6 @@
         <option value="$PROJECT_DIR$/src/gui/VideoStreamer.py" />
         <option value="$PROJECT_DIR$/src/gui/Server.py" />
         <option value="$PROJECT_DIR$/src/utils/Config.py" />
-        <option value="$PROJECT_DIR$/src/gui/Streamer.py" />
         <option value="$PROJECT_DIR$/src/processors/FakeProcessor.py" />
         <option value="$PROJECT_DIR$/src/processors/BaseProcessor.py" />
         <option value="$PROJECT_DIR$/src/processors/StandardProcessors.py" />
@@ -156,9 +163,10 @@
         <option value="$PROJECT_DIR$/proc_test.py" />
         <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/src/camera/Frame.py" />
-        <option value="$PROJECT_DIR$/src/utils/PubSub.py" />
         <option value="$PROJECT_DIR$/src/processors/Processor.py" />
         <option value="$PROJECT_DIR$/src/camera/Camera.py" />
+        <option value="$PROJECT_DIR$/src/gui/Streamer.py" />
+        <option value="$PROJECT_DIR$/src/utils/PubSub.py" />
       </list>
     </option>
   </component>
@@ -416,27 +424,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Streamer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/StandardProcessors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="872" column="60" selection-start-line="872" selection-start-column="60" selection-end-line="872" selection-end-column="60" />
         </state>
       </provider>
     </entry>
@@ -538,10 +529,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="852" lean-forward="true" selection-start-line="852" selection-end-line="852" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Streamer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/multiprocessing/__init__.pyi">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#29#154#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/PubSub.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="89" column="40" selection-start-line="89" selection-start-column="40" selection-end-line="89" selection-end-column="40" />
+        <state relative-caret-position="278">
+          <caret line="50" column="90" selection-start-line="50" selection-start-column="90" selection-end-line="50" selection-end-column="90" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
