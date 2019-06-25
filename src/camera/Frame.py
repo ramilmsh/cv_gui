@@ -41,15 +41,17 @@ class Frame:
         if width != -1:
             scale = width / self._width
 
-        self._array = cv2.resize(self._array, (math.floor(self._width * scale), 
-            math.floor(self._height * scale)), interpolation=cv2.INTER_CUBIC)
+        self._array = cv2.resize(self._array, (math.floor(self._width * scale),
+                                               math.floor(self._height * scale)), interpolation=cv2.INTER_CUBIC)
+
+        return self
 
     def to_pillow(self):
         return Image.fromarray(self._array, mode='RGB')
 
     def to_bytes(self):
-        metadata=struct.pack('<IId', self._width, self._height, self._cap_time)
-        arr=np.insert(self._array.ravel(), 0, np.frombuffer(
+        metadata = struct.pack('<IId', self._width, self._height, self._cap_time)
+        arr = np.insert(self._array.ravel(), 0, np.frombuffer(
             metadata, dtype=np.uint8), 0)
         return bytes(arr)
 
@@ -81,14 +83,14 @@ class Frame:
     @classmethod
     def from_pillow(cls, image: Image, time_captured=None) -> 'Frame':
         if image.mode != 'RGB':
-            image=image.convert('RGB')
-        arr=np.array(image).reshape(
+            image = image.convert('RGB')
+        arr = np.array(image).reshape(
             (image.height, image.width, 3)).astype(np.uint8)
         return cls(arr, image.size, time_captured)
 
     @classmethod
     def from_bytes(cls, data, time_captured=None) -> 'Frame':
-        width, height, cap_time=struct.unpack_from('<IId', data, 0)
-        arr=np.frombuffer(data, dtype=np.uint8, offset=16)
-        arr=arr.reshape((height, width, 3))
+        width, height, cap_time = struct.unpack_from('<IId', data, 0)
+        arr = np.frombuffer(data, dtype=np.uint8, offset=16)
+        arr = arr.reshape((height, width, 3))
         return cls(arr, (width, height), time_captured)

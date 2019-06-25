@@ -1,3 +1,5 @@
+from typing import Dict
+
 from redis import StrictRedis
 from threading import Thread, Lock
 
@@ -19,12 +21,11 @@ class PubSub:
         """
         Initialize redis instance
 
-        :param dict args: positional arguments (passed on to redis instance)
-        :param dict kwargs: key-word arguments (passed on to redis instance)
+        :param Redis redis: redis instance
         """
         assert redis is not None, "Redis must be initialized"
         self.redis = redis
-        self.subscribers = {}
+        self.subscribers = {}  # type: Dict[str, OrderedHashSet]
         self.subscribers_lock = Lock()
         self.threads = {}
 
@@ -37,7 +38,7 @@ class PubSub:
         """
         self.redis.publish(channel, message)
 
-    def subscribe(self, channel: str, callback: callable) -> str:
+    def subscribe(self, channel: str, callback: callable) -> int:
         """
         Subscribe to a channel
 
@@ -58,12 +59,12 @@ class PubSub:
             self.threads[channel].start()
         return _id
 
-    def unsubscribe(self, channel: str, id: str):
-        if channel not in self.subscribers or id not in self.subscribers[channel]:
+    def unsubscribe(self, channel: str, _id: int):
+        if channel not in self.subscribers or _id not in self.subscribers[channel]:
             return
 
         with self.subscribers_lock:
-            del self.subscribers[channel][id]
+            del self.subscribers[channel][_id]
         if len(self.subscribers[channel]) == 0:
             self.redis.publish(channel, 'done')
 
