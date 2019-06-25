@@ -48,6 +48,7 @@ class Frame:
         self._array = cv2.cvtColor(self._array, flag)
         self._height, self._width = self._array.shape
         self._channel_num = self._array.shape[2] if len(self._array.shape) > 2 else 1
+
         return self
 
     def to_pillow(self):
@@ -63,7 +64,7 @@ class Frame:
         return self._array
 
     def to_cv2_bgr(self):
-        return cv2.cvtColor(self._array, cv2.COLOR_RGB2BGR)
+        return self._array
 
     def copy(self) -> 'Frame':
         return Frame(self._array.copy(), (self._width, self._height), self._cap_time)
@@ -81,16 +82,7 @@ class Frame:
 
     @classmethod
     def from_cv2_bgr(cls, open_cv_img, time_captured=None) -> 'Frame':
-        return cls(cv2.cvtColor(open_cv_img, cv2.COLOR_BGR2RGB),
-                   (open_cv_img.shape[1], open_cv_img.shape[0]), time_captured)
-
-    @classmethod
-    def from_pillow(cls, image: Image, time_captured=None) -> 'Frame':
-        if image.mode != 'RGB':
-            image = image.convert('RGB')
-        arr = np.array(image).reshape(
-            (image.height, image.width, 3)).astype(np.uint8)
-        return cls(arr, image.size, time_captured)
+        return cls(open_cv_img, (open_cv_img.shape[1], open_cv_img.shape[0]), time_captured)
 
     @classmethod
     def from_bytes(cls, data, time_captured=None) -> 'Frame':

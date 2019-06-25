@@ -12,15 +12,8 @@ Camera()
 processor = Processor([
     (no_action, {}),
     (in_range, {'channel': 'image'})
-])
+]).subscribe('stream')
 
-
-@inject
-def init(pubsub: PubSub = None):
-    pubsub.subscribe('stream', processor.execute)
-
-
-init()
 
 server = Server()
 server.run(host="0.0.0.0", threaded=True)

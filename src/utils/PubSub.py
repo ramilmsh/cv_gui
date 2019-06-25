@@ -1,3 +1,4 @@
+import time
 from typing import Dict
 
 import numpy as np
@@ -76,6 +77,7 @@ class PubSub:
         redis_pubsub.subscribe(channel)
 
         for message in redis_pubsub.listen():
+
             if message['type'] != 'message':
                 continue
 
@@ -85,6 +87,7 @@ class PubSub:
             with self.subscribers_lock:
                 for callback in self.subscribers[channel].values():
                     self._on_receive(channel, message, callback)
+        redis_pubsub.unsubscribe(channel)
 
     def _on_receive(self, channel: str, message: dict, callback: callable):
         callback(message['data'])
