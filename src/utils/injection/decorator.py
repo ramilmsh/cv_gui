@@ -18,6 +18,8 @@ class Bindings:
     
     @classmethod
     def binding_available(cls, annotation):
+        if type(annotation) == list or type(annotation) == dict:
+            return False
         return annotation.__name__ in cls._bindings
 
 

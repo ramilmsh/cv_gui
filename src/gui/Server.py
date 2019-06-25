@@ -24,10 +24,9 @@ class Server(Flask):
     def index(self):
         return render_template('index.html', context={"title": "Title"})
 
-    def stream(self, channel: str = 'DefaultCamera'):
+    def stream(self, channel: str = 'stream'):
         # if channel not in self.config['active_channels']:
         #     return "Channel inactive"
-
         if channel not in self.streamers:
             self.streamers[channel] = Streamer(channel)
 

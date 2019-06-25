@@ -21,9 +21,6 @@ class Frame:
         :param array:
         :param size: tuple(width, height)
         """
-        assert len(array.shape) == 3
-        assert array.shape[2] == 3
-
         if time_captured is None:
             time_captured = time.time()
 
@@ -33,6 +30,7 @@ class Frame:
             self._array = np.ascontiguousarray(array, dtype=np.uint8)
 
         self._width, self._height = size
+        self._channel_num = array.shape[2] if len(array.shape) > 2 else 1
         self._cap_time = time_captured
 
     def resize(self, height=-1, width=-1, scale=-1):
@@ -40,17 +38,23 @@ class Frame:
             scale = height / self._height
         if width != -1:
             scale = width / self._width
-
         self._array = cv2.resize(self._array, (math.floor(self._width * scale),
-                                               math.floor(self._height * scale)), interpolation=cv2.INTER_CUBIC)
+                                               math.floor(self._height * scale)),
+                                 interpolation=cv2.INTER_CUBIC)
 
+        return self
+
+    def cvtColor(self, flag):
+        self._array = cv2.cvtColor(self._array, flag)
+        self._height, self._width = self._array.shape
+        self._channel_num = self._array.shape[2] if len(self._array.shape) > 2 else 1
         return self
 
     def to_pillow(self):
         return Image.fromarray(self._array, mode='RGB')
 
     def to_bytes(self):
-        metadata = struct.pack('<IId', self._width, self._height, self._cap_time)
+        metadata = struct.pack('<IIId', self._width, self._height, self._channel_num, self._cap_time)
         arr = np.insert(self._array.ravel(), 0, np.frombuffer(
             metadata, dtype=np.uint8), 0)
         return bytes(arr)
@@ -90,7 +94,7 @@ class Frame:
 
     @classmethod
     def from_bytes(cls, data, time_captured=None) -> 'Frame':
-        width, height, cap_time = struct.unpack_from('<IId', data, 0)
-        arr = np.frombuffer(data, dtype=np.uint8, offset=16)
-        arr = arr.reshape((height, width, 3))
+        width, height, channel_num, cap_time = struct.unpack_from('<IIId', data, 0)
+        arr = np.frombuffer(data, dtype=np.uint8, offset=20)
+        arr = arr.reshape((height, width, channel_num))
         return cls(arr, (width, height), time_captured)

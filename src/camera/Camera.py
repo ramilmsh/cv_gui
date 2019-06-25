@@ -1,18 +1,18 @@
-import cv2
-import datetime
-from redis import Redis
-from threading import Thread
 import time
+
+import cv2
+from threading import Thread
 
 from src.camera.BaseCamera import BaseCamera
 from src.camera.Frame import Frame
 from src.utils.injection.decorator import inject
 from src.utils.PubSub import PubSub
 
+
 class Camera(BaseCamera):
 
     @inject
-    def __init__(self, source, name: str = 'DefaultCamera', pubsub: PubSub = None):
+    def __init__(self, source: [int, str] = 0, name: str = 'stream', pubsub: PubSub = None):
         super().__init__(name=name)
         self.capture = cv2.VideoCapture(source)
         self.pubsub = pubsub

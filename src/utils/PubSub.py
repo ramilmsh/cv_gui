@@ -51,7 +51,8 @@ class PubSub:
         if channel not in self.subscribers:
             self.subscribers[channel] = OrderedHashSet()
 
-        _id = self.subscribers[channel].append(callback)
+        with self.subscribers_lock:
+            _id = self.subscribers[channel].append(callback)
 
         if channel not in self.threads or not self.threads[channel].is_alive():
             self.threads[channel] = Thread(

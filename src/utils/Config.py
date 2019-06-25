@@ -32,7 +32,6 @@ class Config(dict):
         for key in self.redis.keys():
             super(Config, self).__setitem__(json.loads(key),
                                             json.loads(self.redis.get(key)))
-            print(key, self.redis.get(key))
 
     def __getitem__(self, item):
         with self._data_lock:
