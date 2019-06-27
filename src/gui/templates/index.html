@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <script src="static/jquery.js"></script>
 
@@ -15,29 +15,30 @@
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">GUI</a>
-        </div>
-    </nav>
-    <div class="row">
-        <div class="col s12 m7">
-            <div class="card">
-                <div class="card-image">
-                    <img src="{{ url_for('stream') }}">
-                    <span class="card-title">Channel {{ url_for('stream') }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m7">
-            <div class="card">
-                <div class="card-image">
-                    <img src="stream/image">
-                    <span class="card-title">Channel {{ url_for('stream') }}</span>
-                </div>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo centre">GUI</a>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="video-container card-image">
+                <img src="/stream">
+                <span class="card-title">Channel {{ url_for('stream') }}</span>
             </div>
         </div>
     </div>
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-image">
+                <img src="stream/seg">
+                <span class="card-title">Channel {{ url_for('stream') }}</span>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

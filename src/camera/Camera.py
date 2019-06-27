@@ -31,5 +31,4 @@ class Camera(BaseCamera):
     def _post_data(self):
         while True:
             self.pubsub.publish(self.name, self.read())
-            # TODO skip messages in
-            time.sleep(.05)
+            time.sleep(.2)

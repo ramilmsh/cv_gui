@@ -1,5 +1,5 @@
 from multiprocessing import Process
-from threading import Lock
+from threading import Lock, Event
 
 import cv2
 
@@ -16,7 +16,7 @@ class Streamer:
         self.channel = channel
         self.pubsub = pubsub
 
-        self._subscriber = None  # type: Process
+        self._subscriber = None  # type: Event
         self.frame_data = b''  # type: bytes
         self.frame_lock = Lock()
         self.running = 0  # type: int
