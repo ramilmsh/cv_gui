@@ -18,6 +18,8 @@ class Camera(BaseCamera):
         self.pubsub = pubsub
 
         self.thread = Thread(target=self._post_data, daemon=True)
+
+    def run(self):
         self.thread.start()
 
     def read(self):
