@@ -10,19 +10,20 @@ from src.utils.PubSub import PubSub
 
 
 class Camera(BaseCamera):
+    FRAME_DELAY = .1  # type: float
 
     @inject
     def __init__(self, source: [int, str] = 0, name: str = 'stream', pubsub: PubSub = None):
         super().__init__(name=name)
-        self.capture = cv2.VideoCapture(source)
-        self.pubsub = pubsub
+        self.capture = cv2.VideoCapture(source)  # type: cv2.VideoCapture
+        self.pubsub = pubsub  # type: PubSub
 
-        self.thread = Thread(target=self._post_data, daemon=True)
+        self.thread = Thread(target=self._post_data, daemon=True)  # type: Thread
 
     def run(self):
         self.thread.start()
 
-    def read(self):
+    def read(self) -> bytes:
         ret, frame = self.capture.read()
         return Frame.from_cv2_bgr(frame).to_bytes()
 
@@ -33,4 +34,4 @@ class Camera(BaseCamera):
     def _post_data(self):
         while True:
             self.pubsub.publish(self.name, self.read())
-            time.sleep(.2)
+            time.sleep(Camera.FRAME_DELAY)

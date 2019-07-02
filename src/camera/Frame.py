@@ -1,5 +1,5 @@
 """
-Author: Austin McKee
+Author: Austin McKee, Ramil Shaymardanov
 """
 
 import struct
@@ -12,8 +12,7 @@ from PIL import Image
 
 class Frame:
     """
-    8-bit RGB numpy array.
-    height * width * 3 channels * uint8
+    Class providing necessary utilities for working on frames
     """
 
     def __init__(self, array: np.array, size, time_captured=None):
@@ -34,6 +33,15 @@ class Frame:
         self._cap_time = time_captured
 
     def resize(self, height=-1, width=-1, scale=-1):
+        """
+        Resize the frame to desired size
+        Only one of the key words arguments must be provided
+
+        :param height: desired height
+        :param width: desired width
+        :param scale: resize scale
+        :return:
+        """
         if height != -1:
             scale = height / self._height
         if width != -1:
@@ -44,26 +52,19 @@ class Frame:
 
         return self
 
-    def cvtColor(self, flag):
-        self._array = cv2.cvtColor(self._array, flag)
-        self._height, self._width = self._array.shape
-        self._channel_num = self._array.shape[2] if len(self._array.shape) > 2 else 1
-
-        return self
-
-    def to_pillow(self):
+    def to_pillow(self) -> Image:
         return Image.fromarray(self._array, mode='RGB')
 
-    def to_bytes(self):
+    def to_bytes(self) -> bytes:
         metadata = struct.pack('<IIId', self._width, self._height, self._channel_num, self._cap_time)
         arr = np.insert(self._array.ravel(), 0, np.frombuffer(
             metadata, dtype=np.uint8), 0)
         return bytes(arr)
 
-    def to_np_array(self):
+    def to_np_array(self) -> np.ndarray:
         return self._array
 
-    def to_cv2_bgr(self):
+    def to_cv2_bgr(self) -> np.ndarray:
         return self._array
 
     def copy(self) -> 'Frame':

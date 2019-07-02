@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9a037647-b25e-4577-bb2b-e089d4416219" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stream.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image2vector (1).svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/image2vector (1).svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image2vector.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/image2vector.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img_screenshot_27.06.2019.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/img_screenshot_27.06.2019.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proc_test.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/camera/Camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera/Camera.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/DummyProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/DummyProcessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/skins_feature.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/skins_feature.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/test.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/test1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/test2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/images/test3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/camera/Frame.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera/Frame.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/camera/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+            <state relative-caret-position="398">
+              <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -60,28 +46,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/run.py">
+        <entry file="file://$PROJECT_DIR$/src/camera/Frame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="60">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
               <folding>
-                <element signature="e#0#48#0" expanded="true" />
+                <element signature="e#30#43#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stream.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -89,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processors/DummyProcessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1155">
-              <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
+            <state relative-caret-position="1170">
+              <caret line="78" column="22" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -101,8 +73,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+            <state relative-caret-position="75">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -152,7 +124,6 @@
         <option value="$PROJECT_DIR$/src/processors/StandardProcessors.py" />
         <option value="$PROJECT_DIR$/src/utils/injection/decorator.py" />
         <option value="$PROJECT_DIR$/proc_test.py" />
-        <option value="$PROJECT_DIR$/src/camera/Frame.py" />
         <option value="$PROJECT_DIR$/src/utils/PubSub.py" />
         <option value="$PROJECT_DIR$/src/gui/Streamer.py" />
         <option value="$PROJECT_DIR$/src/gui/templates/index.html" />
@@ -162,9 +133,10 @@
         <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/src/processors/DummyProcessor.py" />
         <option value="$PROJECT_DIR$/server.py" />
-        <option value="$PROJECT_DIR$/src/camera/Camera.py" />
         <option value="$PROJECT_DIR$/stream.py" />
         <option value="$PROJECT_DIR$/run.py" />
+        <option value="$PROJECT_DIR$/src/camera/Camera.py" />
+        <option value="$PROJECT_DIR$/src/camera/Frame.py" />
       </list>
     </option>
   </component>
@@ -378,16 +350,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/StandardProcessors.py" />
-    <entry file="file://$PROJECT_DIR$/proc_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="22" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/proc_test.py" />
     <entry file="file:///usr/local/lib/python3.7/site-packages/redis/connection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-590">
@@ -426,13 +389,6 @@
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/camera/Frame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -551,28 +507,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/processors/DummyProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/camera/Camera.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
@@ -592,6 +528,43 @@
           <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/processors/DummyProcessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1170">
+          <caret line="78" column="22" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharmCE2019.1/python_stubs/-1199943126/cv2/cv2/VideoCapture.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2505">
+          <caret line="185" column="8" selection-start-line="185" selection-start-column="8" selection-end-line="185" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/camera/Camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/camera/Frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#30#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
