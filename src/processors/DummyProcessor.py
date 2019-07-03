@@ -13,6 +13,11 @@ def get_dist2(a, b, c):
     return 255 - 50 * int(np.linalg.norm([abs(a - b), abs(b - c), abs(a - c)]))
 
 
+def save(img, filename):
+    cv2.imwrite(filename, img)
+    return img
+
+
 def get_dist(a, b, c):
     """
     Distance between a line and a point in 3d space
@@ -33,11 +38,11 @@ def no_action(img):
 
 
 def in_range(img, channel: str = 'image'):
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    return cv2.inRange(img, np.array([0, 0, 100]), np.array([360, 50, 100]))
+    print(img)
+    return cv2.inRange(img, np.array([1, 1, 1]), np.array([255, 255, 255]))
 
 
-def resize(img: np.ndarray, height: float = 360):
+def resize(img: np.ndarray, height: float = 360, channel: str = ''):
     h = height
     w = int(height / img.shape[0] * img.shape[1])
     return cv2.resize(img, (w, h))

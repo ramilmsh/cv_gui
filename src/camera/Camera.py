@@ -13,12 +13,12 @@ class Camera(BaseCamera):
     FRAME_DELAY = .1  # type: float
 
     @inject
-    def __init__(self, source: [int, str] = 0, name: str = 'stream', pubsub: PubSub = None):
+    def __init__(self, source: [int, str] = 0, name: str = 'stream', pubsub: PubSub = None, daemon=False):
         super().__init__(name=name)
         self.capture = cv2.VideoCapture(source)  # type: cv2.VideoCapture
         self.pubsub = pubsub  # type: PubSub
 
-        self.thread = Thread(target=self._post_data, daemon=True)  # type: Thread
+        self.thread = Thread(target=self._post_data, daemon=daemon)  # type: Thread
 
     def run(self):
         self.thread.start()

@@ -13,7 +13,7 @@ class PubSub:
     This class is intended for communication in asynchronous and multi-threaded
     applications (note that unix threads do not have shared memory). It does not
     provide guarantee of sequential execution, but rather allows several subprocesses
-    to process same data. Processes must NOT alter data as it is sent by reference
+    to process same raw_data. Processes must NOT alter raw_data as it is sent by reference
     """
 
     @inject
@@ -28,10 +28,10 @@ class PubSub:
 
     def publish(self, channel: str, message: object):
         """
-        Publish data to redis
+        Publish raw_data to redis
 
         :param str channel: channel name
-        :param object message: data to be published
+        :param object message: raw_data to be published
         """
         self.redis.publish(channel, message)
 
@@ -70,4 +70,4 @@ class PubSub:
 
     @classmethod
     def _on_receive(cls, message: dict, callback: callable):
-        callback(message['data'])
+        callback(message['raw_data'])
