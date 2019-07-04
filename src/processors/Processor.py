@@ -1,4 +1,5 @@
 import time
+from threading import Lock, Thread
 from typing import List, Dict, Tuple
 
 import numpy as np
@@ -11,11 +12,16 @@ from src.utils.injection.decorator import inject
 class Processor:
 
     @inject
-    def __init__(self, processors: List[Tuple[callable, dict]], pubsub: PubSub = None):
+    def __init__(self, processors: [Tuple[callable, dict], callable], pubsub: PubSub = None):
         self.processors = processors
         self.pubsub = pubsub
-        self.img = None
+        self.image_cache = {}
+        self.image_lock = Lock()
         self.processed = True
+
+        self.publish_thread = Thread(target=self._publish_loop, daemon=True)
+        self.publish_thread.start()
+        print("Processor initialized.")
 
     def execute(self, img) -> np.ndarray:
         if type(img) is Frame:
@@ -23,11 +29,17 @@ class Processor:
         elif type(img) is bytes:
             img = Frame.from_bytes(img).to_cv2_bgr()
 
-        for _tuple in self.processors:
-            processor, params = _tuple
+        for element in self.processors:
+            if type(element) == tuple:
+                processor, params = element
+            else:
+                processor = element
+                params = {}
+
             img = processor(img, **params)
             if 'channel' in params:
-                self.publish(params['channel'], img)
+                with self.image_lock:
+                    self.image_cache[params['channel']] = img
 
         self.processed = True
         return img
@@ -43,5 +55,13 @@ class Processor:
         if self.processed:
             self.processed = False
             self.execute(self.img)
+
+    def _publish_loop(self):
+        while True:
+            with self.image_lock:
+                for channel in self.image_cache:
+                    self.publish(channel, self.image_cache[channel])
+
+            time.sleep(.2)
 
 

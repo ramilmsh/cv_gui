@@ -70,4 +70,4 @@ class PubSub:
 
     @classmethod
     def _on_receive(cls, message: dict, callback: callable):
-        callback(message['raw_data'])
+        callback(message['data'])

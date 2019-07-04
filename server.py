@@ -1,4 +1,6 @@
+from threading import Thread
+
 from src.gui.Server import Server
+from multiprocessing import Process
 
 server = Server()
-server.run(host="0.0.0.0", threaded=True)

@@ -11,9 +11,9 @@ bounds = [1000, 1000, 2500, 3000]
 train_in = img[bounds[0]:bounds[2], bounds[1]:bounds[3]]
 train_out = result[bounds[0]:bounds[2], bounds[1]:bounds[3]]
 
-bounds = [1000, 3000, 2500, 3500]
-test_in = img[bounds[0]:bounds[2], bounds[1]:bounds[3]]
-test_out = result[bounds[0]:bounds[2], bounds[1]:bounds[3]]
+
+test_in = img.copy()
+test_out = result.copy()
 
 # img = np.array([[[1, 2, 3], [4, 5, 6], [7, 8, 9], [0, 1, 2], [3, 4, 5]],
 #                 [[1, 2, 3], [4, 5, 6], [7, 8, 9], [0, 1, 2], [3, 4, 5]],
@@ -48,3 +48,8 @@ for i in range(offset, test_in.shape[0] - offset, step):
 print(len(data))
 np.save('data/test_in', data)
 np.save('data/test_out', output)
+
+output = np.array(output) * 255
+output = output.reshape((test_in.shape[0] - offset * 2, test_in.shape[1] - offset * 2))
+plt.imshow(output)
+plt.show()

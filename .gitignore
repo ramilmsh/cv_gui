@@ -5,6 +5,7 @@ __pycache__/
 *.rdb
 bin/
 include/
+src/processors/ml/data/*.npy
 
 # C extensions
 *.so

@@ -113,7 +113,9 @@ def print_lines(img):
     return img
 
 
-def print_contours(img):
+def print_contours(img, channel: str = ""):
+    if len(img.shape) >= 3 and img.shape[2] == 3:
+        img = 255 - cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     contours, hierarchy = cv2.findContours(img, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     cnt = sorted(contours, key=cv2.contourArea, reverse=True)  # max contour
     f = open('path.svg', 'w+')
@@ -123,7 +125,6 @@ def print_contours(img):
         f.write('<path d="M')
 
         for i in range(len(c)):
-            print(i)
             x, y = c[i][0]
             f.write(str(x) + ' ' + str(y) + ' ')
 
