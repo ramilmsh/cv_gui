@@ -29,8 +29,9 @@ class Server(Flask):
     def stream(self, channel: str = 'stream'):
         # if channel not in self.config['active_channels']:
         #     return "Channel inactive"
-        if channel not in self.streamers:
-            self.streamers[channel] = Streamer(channel)
+        if channel in self.streamers:
+            del self.streamers[channel]
+        self.streamers[channel] = Streamer(channel)
 
         response = Response(self.streamers[channel].generator(),
                             mimetype='multipart/x-mixed-replace; boundary=frame')
