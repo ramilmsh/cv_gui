@@ -343,10 +343,10 @@
     </configuration>
     <list>
       <item itemvalue="Python.app" />
-      <item itemvalue="Python tests.Nosetests in test" />
       <item itemvalue="Python.dissect" />
-      <item itemvalue="Python.keras_test" />
       <item itemvalue="Python.fit" />
+      <item itemvalue="Python.keras_test" />
+      <item itemvalue="Python tests.Nosetests in test" />
     </list>
     <recent_temporary>
       <list>

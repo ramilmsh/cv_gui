@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ "$1" == "start" ]]; then
+    echo "Checking redis..."
+    if [[ "$(redis-cli ping)" != "PONG" ]]; then
+        echo "Redis not running. Starting"
+        screen -d -m -S redis bash -c 'redis-server'
+        sleep .2
+    fi
+
+    if [[ "$(redis-cli ping)" != "PONG" ]]; then
+        echo "Redis failed to start. Aborting..."
+        exit 1;
+    else
+        echo "OK"
+    fi
+
+    if [[ "$2" == "servr" ]]; then
+        if [[ "$(curl 0.0.0.0:5000/ping)" != "pong" ]]; then
+            echo $(curl 0.0.0.0:5000/ping)
+            exit
+        fi
+    fi
+    echo "Starting" ${2}...
+    screen -d -m -S ${2} python3 ${2}.py
+    echo "OK"
+fi
+
+if [[ "$1" == "stop" ]]; then
+    if [[ "$2" == "server" ]]; then
+        echo $(curl 0.0.0.0:5000/stop)
+    fi
+fi
