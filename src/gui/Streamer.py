@@ -9,7 +9,7 @@ from src.utils.injection.decorator import inject
 
 
 class Streamer:
-    IMAGE_HEIGHT = 360
+    IMAGE_HEIGHT = 720
     TIMEOUT = 3.
 
     @inject

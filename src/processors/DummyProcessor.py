@@ -9,6 +9,35 @@ C = np.array([255., 257.2748941071508, 256.00960321263835])
 D = (C - B) / np.linalg.norm(C - B)
 
 
+def sobel(img):
+    scale = 1
+    delta = 0
+    ddepth = cv2.CV_16S
+
+    grad_x = cv2.Sobel(img, ddepth, 1, 0, ksize=5)
+    grad_y = cv2.Sobel(img, ddepth, 0, 1, ksize=5)
+
+    abs_grad_x = cv2.convertScaleAbs(grad_x)
+    abs_grad_y = cv2.convertScaleAbs(grad_y)
+
+    img = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+    return img
+
+
+def edges(img, channel: str = ""):
+    cv2.GaussianBlur(img, (5, 5), 2, img)
+    b, g, r = cv2.split(img)
+    b, g, r = sobel(b), sobel(g), sobel(r)
+    img = (.33 * b + .33 * g + .33 * r).astype(np.uint8)
+    # img = cv2.Canny(img, 100, 200)
+    _, img = cv2.threshold(img, 150, 255, cv2.THRESH_BINARY_INV)
+    return img
+
+
+def invert(img):
+    return 255 - img
+
+
 def get_dist2(a, b, c):
     return 255 - 50 * int(np.linalg.norm([abs(a - b), abs(b - c), abs(a - c)]))
 
@@ -38,7 +67,6 @@ def no_action(img):
 
 
 def in_range(img, channel: str = 'image'):
-    print(img)
     return cv2.inRange(img, np.array([1, 1, 1]), np.array([255, 255, 255]))
 
 
@@ -81,13 +109,13 @@ def seg_pencil(img, channel: str = 'seg'):
 
 
 def erode_dilate(img):
-    kernel = np.ones((3, 3), np.uint8)
+    kernel = np.ones((5, 5), np.uint8)
     # img = cv2.dilate(img, kernel, iterations=1)
-    kernel[1][1] = 3
+    # kernel[1][1] = 3
     # img = cv2.erode(img, kernel, iterations=1)
 
-    img = cv2.dilate(img, kernel, iterations=1)
-    img = cv2.erode(img, kernel, iterations=1)
+    img = cv2.dilate(img, kernel, iterations=3)
+    # img = cv2.erode(img, kernel, iterations=1)
 
     # img = cv2.Laplacian(img, cv2.CV_64F)
     # img = cv2.filter2D(img, -1, kernel)

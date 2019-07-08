@@ -6,6 +6,7 @@ __pycache__/
 bin/
 include/
 src/processors/ml/data/*.npy
+src/processors/images/*
 
 # C extensions
 *.so

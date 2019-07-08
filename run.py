@@ -7,12 +7,12 @@ from matplotlib import pyplot as plt
 
 processor = Processor([
     # (resize, {'height': 4}),
-    no_action,
-    (print_contours, {'channel': 'seg'}),
-    # (save, {'filename': 'test8.png'})
+    (edges, {'channel': 'seg'}),
+    (save, {'filename': 'src/processors/images/test_1.png'}),
+    # erode_dilate
 ])  # type: Processor
 
-processor.execute(cv2.imread('src/processors/images/6_1.png'))
+processor.execute(cv2.imread('src/processors/images/test_1.jpg'))
 
 if sys.stdin.readline():
     print("done")
