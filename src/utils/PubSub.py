@@ -52,6 +52,12 @@ class PubSub:
         return event
 
     def unsubscribe(self, event: Event):
+        """
+        Unsubscribe from channel
+
+        :param event: event associated with subscriber instance
+        :return:
+        """
         event.set()
 
     def _subscribe_loop(self, channel: str, callback: callable, event: Event):

@@ -3,11 +3,12 @@ Author: Austin McKee, Ramil Shaymardanov
 """
 
 import struct
+from typing import Tuple
+
 import cv2
 import numpy as np
 import time
 import math
-from PIL import Image
 
 
 class Frame:
@@ -15,7 +16,7 @@ class Frame:
     Class providing necessary utilities for working on frames
     """
 
-    def __init__(self, array: np.array, size, time_captured=None):
+    def __init__(self, array: np.array, size: Tuple[int, int], time_captured=None):
         """
         :param array:
         :param size: tuple(width, height)
@@ -51,9 +52,6 @@ class Frame:
                                  interpolation=cv2.INTER_CUBIC)
 
         return self
-
-    def to_pillow(self) -> Image:
-        return Image.fromarray(self._array, mode='RGB')
 
     def to_bytes(self) -> bytes:
         metadata = struct.pack('<IIId', self._width, self._height, self._channel_num, self._cap_time)

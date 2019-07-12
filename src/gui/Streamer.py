@@ -9,11 +9,24 @@ from src.utils.injection.decorator import inject
 
 
 class Streamer:
+    """
+    A streamer utility to continuously retrieve frames from PubSub
+    and send them over M-JPEG protocol using generator functions in Flask
+    """
+    # All images will be converted to this height for performance reasons
     IMAGE_HEIGHT = 720
+    # If a channel has not received a communication in this interval, streamer shuts down
+    # TODO: make optional
     TIMEOUT = 3.
 
     @inject
     def __init__(self, channel: str = "stream", pubsub: PubSub = None):
+        """
+        Initialize
+
+        :param str channel: stream channel name
+        :param PubSub pubsub: pubsub
+        """
         self.channel = channel
         self.pubsub = pubsub
 
@@ -27,6 +40,10 @@ class Streamer:
         self.timeout = False
 
     def run(self):
+        """
+        Start the stream
+        :return:
+        """
         self.running += 1
         if self.running > 1:
             return
@@ -34,6 +51,10 @@ class Streamer:
         self.timeout_thread.start()
 
     def stop(self):
+        """
+        Stop the stream and free resources
+        :return:
+        """
         self.running -= 1
         self.frame_lock.release()
         self.last_published = -2
@@ -41,6 +62,10 @@ class Streamer:
             self.pubsub.unsubscribe(self._subscriber)
 
     def generator(self):
+        """
+        Generator function to be passed on to Flask
+        :return:
+        """
         self.run()
         self.frame_lock.acquire()
         while True:
@@ -55,6 +80,10 @@ class Streamer:
                 print(e)
 
     def _check_timeout(self):
+        """
+        Check if the channel is still active
+        :return:
+        """
         while True:
             if self.last_published == -1:
                 pass
@@ -66,11 +95,22 @@ class Streamer:
 
     @classmethod
     def _encode(cls, frame) -> bytes:
+        """
+        Convert a frame into an HTML package
+        :param frame:
+        :return:
+        """
         return b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' \
                + cv2.imencode('.jpeg', frame.to_cv2_bgr())[1].tobytes() \
                + b'\r\n'
 
     def _receive_frame(self, frame_data):
+        """
+        Receive frame from PubSub
+
+        :param frame_data:
+        :return:
+        """
         self.last_published = time.time()
         self.frame_data = frame_data
         try:

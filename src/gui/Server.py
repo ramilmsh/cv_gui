@@ -8,6 +8,9 @@ from src.utils.injection.decorator import inject
 
 
 class Server(Flask):
+    """
+    A generic flask server with MJPEG streaming functionality
+    """
     DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
     @inject
@@ -27,8 +30,6 @@ class Server(Flask):
         return render_template('index.html', context={"title": "Title"})
 
     def stream(self, channel: str = 'stream'):
-        # if channel not in self.config['active_channels']:
-        #     return "Channel inactive"
         if channel in self.streamers:
             del self.streamers[channel]
         self.streamers[channel] = Streamer(channel)

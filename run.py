@@ -4,7 +4,6 @@ import sys
 from src.processors.DummyProcessor import *
 from src.processors.Processor import Processor
 from matplotlib import pyplot as plt
-
 processor = Processor([
     # (resize, {'height': 4}),
     (edges, {'channel': 'seg'}),
